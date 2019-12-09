@@ -1,12 +1,12 @@
 #include "allfunctions.h"
 
-/**********адрес текущей директории***************************************/
+/**********Р°РґСЂРµСЃ С‚РµРєСѓС‰РµР№ РґРёСЂРµРєС‚РѕСЂРёРё***************************************/
 int getcurrdirect()
 {
 	DWORD  dwNumberOfChar;
 	char  szDirName[MAX_PATH];
 
-	dwNumberOfChar = GetCurrentDirectory(MAX_PATH, szDirName);// определяем имя текущего каталога
+	dwNumberOfChar = GetCurrentDirectory(MAX_PATH, szDirName);// РѕРїСЂРµРґРµР»СЏРµРј РёРјСЏ С‚РµРєСѓС‰РµРіРѕ РєР°С‚Р°Р»РѕРіР°
 	if (dwNumberOfChar == 0)
 	{
 		cerr << "Get current directory failed." << endl
@@ -15,35 +15,35 @@ int getcurrdirect()
 		cin.get();
 		return 0;
 	}
-		cout << setw(5) <<"Текущая папка: " << szDirName << "->";	// выводим на консоль имя текущего каталога
+		cout << setw(5) <<"РўРµРєСѓС‰Р°СЏ РїР°РїРєР°: " << szDirName << "->";	// РІС‹РІРѕРґРёРј РЅР° РєРѕРЅСЃРѕР»СЊ РёРјСЏ С‚РµРєСѓС‰РµРіРѕ РєР°С‚Р°Р»РѕРіР°
 	 return 0;
 }
 /**************************************************************************/
-/***********создание директории*******************************************/
+/***********СЃРѕР·РґР°РЅРёРµ РґРёСЂРµРєС‚РѕСЂРёРё*******************************************/
 int createdirect()
 {	
 	char  szDirName[MAX_PATH],ans[4];
-	TCHAR  sPathto1[MAX_PATH],sPathTo2[MAX_PATH] ;//путь для создания и путь который нужно создать
-	GetCurrentDirectory(MAX_PATH, szDirName);// определяем имя текущего каталога
+	TCHAR  sPathto1[MAX_PATH],sPathTo2[MAX_PATH] ;//РїСѓС‚СЊ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ Рё РїСѓС‚СЊ РєРѕС‚РѕСЂС‹Р№ РЅСѓР¶РЅРѕ СЃРѕР·РґР°С‚СЊ
+	GetCurrentDirectory(MAX_PATH, szDirName);// РѕРїСЂРµРґРµР»СЏРµРј РёРјСЏ С‚РµРєСѓС‰РµРіРѕ РєР°С‚Р°Р»РѕРіР°
 	do 
 		{
-		cout << setw(5)<<"Введите текущая (cur) для создания папки в текущем каталоге или другое (els)  ";
+		cout << setw(5)<<"Р’РІРµРґРёС‚Рµ С‚РµРєСѓС‰Р°СЏ (cur) РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РїР°РїРєРё РІ С‚РµРєСѓС‰РµРј РєР°С‚Р°Р»РѕРіРµ РёР»Рё РґСЂСѓРіРѕРµ (els)  ";
 		cin >> ans;
 	} while ((strcmp(ans,"cur") > 0) || (strcmp(ans, "els")>0));
 	if ((strcmp(ans, "cur") == 0))
 	{
-		cout << "Новая папка: ";
+		cout << "РќРѕРІР°СЏ РїР°РїРєР°: ";
 		cin >> sPathTo2;
 		strcat_s(szDirName, "\\");
 		strcat_s(szDirName, sPathTo2);
 		strcpy_s(sPathto1, szDirName);
-		CreateDirectory(sPathto1, NULL);//создать папку
+		CreateDirectory(sPathto1, NULL);//СЃРѕР·РґР°С‚СЊ РїР°РїРєСѓ
 	}
 	else 
 	{
 		if ((strcmp(ans,"els") == 0))
 		{
-		cout << "Введите полный путь для создаваемой папки" << endl;
+		cout << "Р’РІРµРґРёС‚Рµ РїРѕР»РЅС‹Р№ РїСѓС‚СЊ РґР»СЏ СЃРѕР·РґР°РІР°РµРјРѕР№ РїР°РїРєРё" << endl;
 		cin >> sPathTo2;
 		strcpy_s(sPathto1, sPathTo2);
 		CreateDirectory(sPathto1, NULL);
@@ -51,90 +51,27 @@ int createdirect()
 	}	return 0;
 }
 /************************************************************************/
-/***************функция смены диска*************************************/
+/***************С„СѓРЅРєС†РёСЏ СЃРјРµРЅС‹ РґРёСЃРєР°*************************************/
 void chdir()
 {
 	TCHAR sPath[MAX_PATH], sPathTo2[MAX_PATH];
-	cout << setw(5)<<"введите путь: ";
+	cout << setw(5)<<"РІРІРµРґРёС‚Рµ РїСѓС‚СЊ: ";
 	cin >> sPathTo2;
 	if (strcmp(sPathTo2, "test") == 0)
 	{
 		strcpy_s(sPathTo2, "C:\\testdirect\\");
 	}
-	strcpy_s(sPath, sPathTo2);//прим. от 25/09/2019 регистр имеет значение для диска 
+	strcpy_s(sPath, sPathTo2);//РїСЂРёРј. РѕС‚ 25/09/2019 СЂРµРіРёСЃС‚СЂ РёРјРµРµС‚ Р·РЅР°С‡РµРЅРёРµ РґР»СЏ РґРёСЃРєР° 
 	SetCurrentDirectory(sPath);
-	//--------29/08/2019/ делаю этот кусок для проверки---------
+	//--------29/08/2019/ РґРµР»Р°СЋ СЌС‚РѕС‚ РєСѓСЃРѕРє РґР»СЏ РїСЂРѕРІРµСЂРєРё---------
 	char  szDirName[MAX_PATH];
 	GetCurrentDirectory(MAX_PATH, szDirName);
 	cout << "Current directory name: " << szDirName << endl;
-	//--------правильной  установки директории------------------
+	//--------РїСЂР°РІРёР»СЊРЅРѕР№  СѓСЃС‚Р°РЅРѕРІРєРё РґРёСЂРµРєС‚РѕСЂРёРё------------------
 }
-/**********************************************************************/
-/***********функция поиска папок в папке ***************************/
-//void wadir ()
-//{	
-//	char  szDirName[MAX_PATH], path[MAX_PATH], mask[15];//сюда записать путь к папке
-//	GetCurrentDirectory(MAX_PATH, szDirName);
-//	int k = strlen(szDirName);
-//	cin >> path;
-//	if (strcmp(path, "cur") == 0)
-//	{
-//		cout << "path current " << szDirName << endl;
-//		strcat_s(szDirName, "\\");
-//		strcpy_s(path, szDirName);
-//	}
-//	else
-//	{
-//		strcat_s(path, "\\");
-//	}
-//	cout << path;
-//	cout << "\nEnter mask (for example, *.* or *.txt):";// Запросим маску файлов 
-//	cin >> mask;
-//	strcat_s(path, mask);//C:\testdirect\*.txt or C:\testdirect\*.* что и где ищем
-//	_finddata_t *lpFindData = new _finddata_t;
-//	long hSearch = _findfirst(path, lpFindData);	//попробуем поискать папки в по пути
-//	int dir = 0, file=0;
-//	int set = 20;
-//	cout << "НАЙДЕННЫЕ ФАЙЛЫ" << endl;
-//	cout << "|ИМЯ\t\t\t|ДАТА ИЗМЕНЕНИЯ\t\t|ТИП\t|РАЗМЕР" << endl;
-//	if (hSearch != -1)
-//	{
-//		do // Пока не закончатся все файлы в директории
-//		{
-//			if (strcmp(".", lpFindData->name) && strcmp("..", lpFindData->name)) // Игнорируем текущую директорию и родительскую
-//			{
-//				if (lpFindData->attrib== FILE_ATTRIBUTE_DIRECTORY) // если найденный файл директория
-//				{
-//					cout << lpFindData->name <<"\n";// выводим название найденной директории
-//					dir++;
-//				}
-//				else
-//				{
-//					file++;
-//					char buffer[30], buffer1[30], buffer2[30];
-//					ctime_s(buffer, _countof(buffer), &(lpFindData->time_create));//22:55 02/09/2019 и ниже то же
-//					ctime_s(buffer1, _countof(buffer1), &(lpFindData->time_access));
-//					ctime_s(buffer2, _countof(buffer2), &(lpFindData->time_write));
-//					AnsiToOem(lpFindData->name, lpFindData->name);//перекодирование имени файла на случай использования кириллицы
-//					cout 
-//						<< lpFindData->name << setw(set-strlen(lpFindData->name))
-//						<<'|' <<buffer2<<"\t"<<'|'<<	lpFindData->attrib	<<'|'<< lpFindData->size
-//						//<< "wr: " << buffer2 << "  "
-//						<< endl;
-//					//printf("%-12s %.24s %91d\n", lpFindData->name, buffer, lpFindData->size);
-//				}
-//			}
-//			_findnext(hSearch, lpFindData); // продолжаем поиск в директории
-//		} while (GetLastError() != ERROR_NO_MORE_FILES); // указывает, что в данном месте больше нету файлов
-//	}
-//	cout << "Было найдено папок: " << dir <<"\n"<< "Было найдено файлов: " <<file<< "\n";
-//	cout << " file(s) in folder..." << path << "\n\n";
-//	_findclose(hSearch);	// Очистка памяти
-//	delete lpFindData;
-//}
 void wadir()
 {
-	char  szDirName[MAX_PATH], path[MAX_PATH], mask[15];//сюда записать путь к папке
+	char  szDirName[MAX_PATH], path[MAX_PATH], mask[15];//СЃСЋРґР° Р·Р°РїРёСЃР°С‚СЊ РїСѓС‚СЊ Рє РїР°РїРєРµ
 	GetCurrentDirectory(MAX_PATH, szDirName);
 	int k = strlen(szDirName);
 	cin >> path;
@@ -149,57 +86,60 @@ void wadir()
 		strcat_s(path, "\\");
 	}
 	cout << path;
-	cout << "\nEnter mask (for example, *.* or *.txt):";// Запросим маску файлов 
+	cout << "\nEnter mask (for example, *.* or *.txt):";// Р—Р°РїСЂРѕСЃРёРј РјР°СЃРєСѓ С„Р°Р№Р»РѕРІ 
 	cin >> mask;
-	strcat_s(path, mask);//C:\testdirect\*.txt or C:\testdirect\*.* что и где ищем
+	strcat_s(path, mask);//C:\testdirect\*.txt or C:\testdirect\*.* С‡С‚Рѕ Рё РіРґРµ РёС‰РµРј
 	_finddata_t *lpFindData = new _finddata_t;
-	long hSearch = _findfirst(path, lpFindData);	//попробуем поискать папки в по пути
+	long hSearch = _findfirst(path, lpFindData);	//РїРѕРїСЂРѕР±СѓРµРј РїРѕРёСЃРєР°С‚СЊ РїР°РїРєРё РІ РїРѕ РїСѓС‚Рё
 	int dir = 0, file = 0;
+	int set = 25;
 	if (hSearch != -1)
 	{
-		do // Пока не закончатся все файлы в директории
+		do // РџРѕРєР° РЅРµ Р·Р°РєРѕРЅС‡Р°С‚СЃСЏ РІСЃРµ С„Р°Р№Р»С‹ РІ РґРёСЂРµРєС‚РѕСЂРёРё
 		{
-			if (strcmp(".", lpFindData->name) && strcmp("..", lpFindData->name)) // Игнорируем текущую директорию и родительскую
+			if (strcmp(".", lpFindData->name) && strcmp("..", lpFindData->name)) // РРіРЅРѕСЂРёСЂСѓРµРј С‚РµРєСѓС‰СѓСЋ РґРёСЂРµРєС‚РѕСЂРёСЋ Рё СЂРѕРґРёС‚РµР»СЊСЃРєСѓСЋ
 			{
-				if (lpFindData->attrib == FILE_ATTRIBUTE_DIRECTORY) // если найденный файл директория
+				if (lpFindData->attrib == FILE_ATTRIBUTE_DIRECTORY) // РµСЃР»Рё РЅР°Р№РґРµРЅРЅС‹Р№ С„Р°Р№Р» РґРёСЂРµРєС‚РѕСЂРёСЏ
 				{
-					cout << lpFindData->name << "\n\n";// выводим название найденной директории
+					cout << lpFindData->name << // РџРµС‡Р°С‚СЊ РёРјРµРЅРё РЅР°Р№РґРµРЅРЅРѕРіРѕ С„Р°Р№Р»Р°
+						<< lpFindData->attrib << "  "
+						<< lpFindData->size << "  "
+						<<"\n";// РІС‹РІРѕРґРёРј РЅР°Р·РІР°РЅРёРµ РЅР°Р№РґРµРЅРЅРѕР№ РґРёСЂРµРєС‚РѕСЂРёРё
 					dir++;
 				}
 				else
 				{
 					file++;
 					char buffer[30], buffer1[30], buffer2[30];
-					ctime_s(buffer, _countof(buffer), &(lpFindData->time_create));//22:55 02/09/2019 и ниже то же
+					ctime_s(buffer, _countof(buffer), &(lpFindData->time_create));//22:55 02/09/2019 Рё РЅРёР¶Рµ С‚Рѕ Р¶Рµ
 					ctime_s(buffer1, _countof(buffer1), &(lpFindData->time_access));
 					ctime_s(buffer2, _countof(buffer2), &(lpFindData->time_write));
-					AnsiToOem(lpFindData->name, lpFindData->name);//перекодирование имени файла на случай использования кириллицы
+					AnsiToOem(lpFindData->name, lpFindData->name);//РїРµСЂРµРєРѕРґРёСЂРѕРІР°РЅРёРµ РёРјРµРЅРё С„Р°Р№Р»Р° РЅР° СЃР»СѓС‡Р°Р№ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РєРёСЂРёР»Р»РёС†С‹
 
 					cout
-						<< lpFindData->name << "  "				// Печать имени найденного файла
+						<< lpFindData->name 	// РџРµС‡Р°С‚СЊ РёРјРµРЅРё РЅР°Р№РґРµРЅРЅРѕРіРѕ С„Р°Р№Р»Р°
 						<< lpFindData->attrib << "  "
 						<< lpFindData->size << "  "
-						<< "create: " << buffer << "  "
 						<< "write: " << buffer2 << "  "
-						<< "\n\n";
+						<< "\n";
 				}
 			}
-			_findnext(hSearch, lpFindData); // продолжаем поиск в директории
-		} while (GetLastError() != ERROR_NO_MORE_FILES); // указывает, что в данном месте больше нету файлов
+			_findnext(hSearch, lpFindData); // РїСЂРѕРґРѕР»Р¶Р°РµРј РїРѕРёСЃРє РІ РґРёСЂРµРєС‚РѕСЂРёРё
+		} while (GetLastError() != ERROR_NO_MORE_FILES); // СѓРєР°Р·С‹РІР°РµС‚, С‡С‚Рѕ РІ РґР°РЅРЅРѕРј РјРµСЃС‚Рµ Р±РѕР»СЊС€Рµ РЅРµС‚Сѓ С„Р°Р№Р»РѕРІ
 	}
-	cout << "Было найдено папок: " << dir << "\n" << "Было найдено файлов: " << file << "\n";
+	cout << "Р‘С‹Р»Рѕ РЅР°Р№РґРµРЅРѕ РїР°РїРѕРє: " << dir << "\n" << "Р‘С‹Р»Рѕ РЅР°Р№РґРµРЅРѕ С„Р°Р№Р»РѕРІ: " << file << "\n";
 	cout << " file(s) in folder..." << path << "\n\n";
-	_findclose(hSearch);	// Очистка памяти
+	_findclose(hSearch);	// РћС‡РёСЃС‚РєР° РїР°РјСЏС‚Рё
 	delete lpFindData;
 }
 
 
 /******************************************************************/
 
-/***********функция поиска папок в папке от 05/12/2019***************************/
+/***********С„СѓРЅРєС†РёСЏ РїРѕРёСЃРєР° РїР°РїРѕРє РІ РїР°РїРєРµ РѕС‚ 05/12/2019***************************/
 //void wadir()
 //{
-//	char  szDirName[MAX_PATH], path[MAX_PATH], mask[15];//сюда записать путь к папке
+//	char  szDirName[MAX_PATH], path[MAX_PATH], mask[15];//СЃСЋРґР° Р·Р°РїРёСЃР°С‚СЊ РїСѓС‚СЊ Рє РїР°РїРєРµ
 //	GetCurrentDirectory(MAX_PATH, szDirName);
 //	int k = strlen(szDirName);
 //	cin >> path;
@@ -214,26 +154,26 @@ void wadir()
 //		strcat_s(path, "\\");
 //	}
 //	cout << path;
-//	cout << "\nEnter mask (for example, *.* or *.txt):";// Запросим маску файлов 
+//	cout << "\nEnter mask (for example, *.* or *.txt):";// Р—Р°РїСЂРѕСЃРёРј РјР°СЃРєСѓ С„Р°Р№Р»РѕРІ 
 //	cin >> mask;
-//	strcat_s(path, mask);//C:\testdirect\*.txt or C:\testdirect\*.* что и где ищем
+//	strcat_s(path, mask);//C:\testdirect\*.txt or C:\testdirect\*.* С‡С‚Рѕ Рё РіРґРµ РёС‰РµРј
 //	_finddata_t *lpFindData = new _finddata_t;
-//	long hSearch = _findfirst(path, lpFindData);	//попробуем поискать папки в по пути
+//	long hSearch = _findfirst(path, lpFindData);	//РїРѕРїСЂРѕР±СѓРµРј РїРѕРёСЃРєР°С‚СЊ РїР°РїРєРё РІ РїРѕ РїСѓС‚Рё
 //	int dir = 0, file = 0;
 //	if (hSearch != -1)
 //	{
-//		do // Пока не закончатся все файлы в директории
+//		do // РџРѕРєР° РЅРµ Р·Р°РєРѕРЅС‡Р°С‚СЃСЏ РІСЃРµ С„Р°Р№Р»С‹ РІ РґРёСЂРµРєС‚РѕСЂРёРё
 //		{
-//			if (strcmp(".", lpFindData->name) && strcmp("..", lpFindData->name)) // Игнорируем текущую директорию и родительскую
+//			if (strcmp(".", lpFindData->name) && strcmp("..", lpFindData->name)) // РРіРЅРѕСЂРёСЂСѓРµРј С‚РµРєСѓС‰СѓСЋ РґРёСЂРµРєС‚РѕСЂРёСЋ Рё СЂРѕРґРёС‚РµР»СЊСЃРєСѓСЋ
 //			{
-//				if (lpFindData->attrib == FILE_ATTRIBUTE_DIRECTORY) // если найденный файл директория
+//				if (lpFindData->attrib == FILE_ATTRIBUTE_DIRECTORY) // РµСЃР»Рё РЅР°Р№РґРµРЅРЅС‹Р№ С„Р°Р№Р» РґРёСЂРµРєС‚РѕСЂРёСЏ
 //				{
-//					cout << lpFindData->name << "\n\n";// выводим название найденной директории
+//					cout << lpFindData->name << "\n\n";// РІС‹РІРѕРґРёРј РЅР°Р·РІР°РЅРёРµ РЅР°Р№РґРµРЅРЅРѕР№ РґРёСЂРµРєС‚РѕСЂРёРё
 //					dir++;
 //				}
 //			}
-//			_findnext(hSearch, lpFindData); // продолжаем поиск в директории
-//		} while (GetLastError() != ERROR_NO_MORE_FILES); // указывает, что в данном месте больше нету файлов
+//			_findnext(hSearch, lpFindData); // РїСЂРѕРґРѕР»Р¶Р°РµРј РїРѕРёСЃРє РІ РґРёСЂРµРєС‚РѕСЂРёРё
+//		} while (GetLastError() != ERROR_NO_MORE_FILES); // СѓРєР°Р·С‹РІР°РµС‚, С‡С‚Рѕ РІ РґР°РЅРЅРѕРј РјРµСЃС‚Рµ Р±РѕР»СЊС€Рµ РЅРµС‚Сѓ С„Р°Р№Р»РѕРІ
 //		do
 //		{
 //			if (strcmp(".", lpFindData->name) && strcmp("..", lpFindData->name))
@@ -242,10 +182,10 @@ void wadir()
 //				{
 //						file++;
 //						char buffer[30], buffer1[30], buffer2[30];
-//						ctime_s(buffer, _countof(buffer), &(lpFindData->time_create));//22:55 02/09/2019 и ниже то же
+//						ctime_s(buffer, _countof(buffer), &(lpFindData->time_create));//22:55 02/09/2019 Рё РЅРёР¶Рµ С‚Рѕ Р¶Рµ
 //						ctime_s(buffer1, _countof(buffer1), &(lpFindData->time_access));
 //						ctime_s(buffer2, _countof(buffer2), &(lpFindData->time_write));
-//						AnsiToOem(lpFindData->name, lpFindData->name);//перекодирование имени файла на случай использования кириллицы
+//						AnsiToOem(lpFindData->name, lpFindData->name);//РїРµСЂРµРєРѕРґРёСЂРѕРІР°РЅРёРµ РёРјРµРЅРё С„Р°Р№Р»Р° РЅР° СЃР»СѓС‡Р°Р№ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РєРёСЂРёР»Р»РёС†С‹
 //						cout
 //						<< lpFindData->name << "  "
 //						<< lpFindData->attrib << "  "
@@ -259,9 +199,9 @@ void wadir()
 //		} while (GetLastError() != ERROR_NO_MORE_FILES);
 //	
 //	}
-//	cout << "Было найдено папок: " << dir << "\n" << "Было найдено файлов: " << file << "\n";
+//	cout << "Р‘С‹Р»Рѕ РЅР°Р№РґРµРЅРѕ РїР°РїРѕРє: " << dir << "\n" << "Р‘С‹Р»Рѕ РЅР°Р№РґРµРЅРѕ С„Р°Р№Р»РѕРІ: " << file << "\n";
 //	cout << " file(s) in folder..." << path << "\n\n";
-//	_findclose(hSearch);	// Очистка памяти
+//	_findclose(hSearch);	// РћС‡РёСЃС‚РєР° РїР°РјСЏС‚Рё
 //	delete lpFindData;
 //}
 /******************************************************************/
