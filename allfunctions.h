@@ -6,6 +6,7 @@
 #include <fstream> 
 #include <time.h> 
 #include <io.h>
+#include <stdio.h>
 #include<direct.h> //удаление файлов и папок
 
 using std::cerr;

@@ -5,105 +5,32 @@
 /*********команда и присваивает ей номер по списку**/
 int switchfunc(char *buf)
 {
-	int ans = NULL;
-	if (strcmp(buf, "opf")==0)
-	{
-		ans = 1;
-	}
-	else
-	{
-		if (strcmp(buf, "del")==0)
-		{
-			ans = 2;
-		}
-		else
-		{
-			if (strcmp(buf, "dir")==0)
-			{
-				ans = 3;
-			}
-			else
-			{
-				if (strcmp(buf, "md")==0)
-					{
-						ans = 4;
-					}
-				else
-				{
-					if (strcmp(buf, "cf")==0)
-					{
-						ans = 5;
-					}
-					else
-					{
-						if (strcmp(buf, "cd")==0)
-						{
-							ans = 6;
-						}
-						else
-						{
-							if (strcmp(buf, "exit")==0)
-							{
-								ans = 0;
-							}
-							else
-							{
-								if (strcmp(buf, "cls")==0)
-								{
-									ans = 8;
-								}
-								else
-								{ 
-									if (strcmp(buf, "help") == 0)
-									{
-										ans = 9;
-									}
-									else
-									{
-										cout << "такой команды пока не существует. введите одну из существующих команд" << endl;
-										ans = 9;
-									}
-									
-								}
-									
-							}
-						}
-							
-								
-					}
-				}
-			}
-		}
-	}
-return ans;
-}
-/**************************************************/
-
-int swfunc(char *buf)
-//void swfunc(char *buf)
-{
 	const char *prCo[] = {"exit","opf","del","dir","md","cf","cd","nul","cls","help"};
 	for (int i = 0; i < 10; ++i)
 	{
 		if (strcmp(buf, prCo[i]) == 0)
-			//
-			//	std::cout << i;
-			//}
 			return i;
 	}	
 	return -1;
 }
+/**************************************************/
+
+
 /****просто команды меню в одной функции**********/
 void menucomm()
-{
+{	//меню
+	printf("%-35s  %-35s \n", "1.open_file function - opf","4.create_directory function - md");
+	printf("%-35s  %-35s \n", "2.delete_file fucntion - del","5.create_file function - cf");
+	printf("%-35s  %-35s \n", "3.watch_directory function - dir","6.change_directory function - cd");
+	printf("%-35s  %-35s \n",  "7.clear_screen function - cls","8.change smt in current directory - cur");
+	printf("%-10s \n", "0 - exit");
 	
-	//меню
-	cout
-			<< endl << "1.open_file function - opf" << setw(45) << "4.create_directory function - md" << endl
-			<< "2.delete_file fucntion - del" << setw(40)<< "5.create_file function - cf" << endl
-			<< "3.watch_directory function - dir" << setw(41)<< "6.change_directory function - cd" << endl
-			<< "7.clear_screen function - cls" << setw(45) << "8.change smt in current directory - cur" << endl
-			<< "0 - exit\n\n";// Выход;
+	//cout
+	//		<< endl << "1.open_file function - opf" << setw(45) << "4.create_directory function - md" << endl
+	//		<< "2.delete_file fucntion - del" << setw(40)<< "5.create_file function - cf" << endl
+	//		<< "3.watch_directory function - dir" << setw(41)<< "6.change_directory function - cd" << endl
+	//		<< "7.clear_screen function - cls" << setw(45) << "8.change smt in current directory - cur" << endl
+	//		<< "0 - exit\n\n";// Выход;
 }
 /************************************************/
 /*****28/11/2019 9:00 не удаляю, потому что под вопросом******/
@@ -142,9 +69,7 @@ void menucase()
 		//slice(str);
 		cin >> str;
 		} while (strlen(str)>4);
-		//ans = switchfunc(str);
-		cout << "command test:   ";
-		ans = swfunc(str);
+		ans = switchfunc(str);
 		switch (ans)
 		{
 		case 1:
@@ -166,6 +91,7 @@ void menucase()
 			chdir();
 			break;
 		case 7:
+			cout << "CREATOR MESSAGE IS ... NOT FOUND" << endl;
 			//пустая команда на случай ошибок неправильного ввода
 			break;
 		case 8: 
@@ -175,7 +101,7 @@ void menucase()
 			menucomm();
 			break;
 		default:
-			cout << "Cпасибо что использовали программу.\n Но разве что-то пошло не так <-.->?" << endl;
+			cout << "Ожидание...." << endl;
 		}
 		/***************************************************/		
 	} while (ans != 0);      // Выход из программы

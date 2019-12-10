@@ -11,6 +11,9 @@ void changeornot()
 		cout << setw(5)<<"ДЕЙСТВИЯ В ТЕКУЩЕЙ ПАПКЕ.ИЗМЕНИТЬ?(yes/no) ";
 		cin >> ans;
 	} while ((strcmp(ans, "no") > 0) && (strcmp(ans, "yes") > 0));
+	
+	cin.clear();
+
 	if ((strcmp(ans, "no") == 0))
 	{
 		GetCurrentDirectory(MAX_PATH, sPath);
@@ -33,11 +36,11 @@ void filecreate()
 	changeornot();
 	cout << setw(5) <<"Имя файла: ";
 	cin >> f_name;
+
 	ofstream fout(f_name); // создаём объект класса ofstream для записи 
 	cin.get(str, MAX, '/');//пока не будет введен конечный символ будет ввод текста продолжен
 	fout << str; // запись строки в файл
 	fout.close(); // закрываем файл
-	system("pause");
 }
 /************************************************************************/
 /*********************функция удаления файла в определенной папке*******/
@@ -50,6 +53,7 @@ void removefile() //added 02/09/2019 21:37
 		cout << setw(5) <<"Удаляется directory (dir) или file (fil)?";
 		cin >> ans;
 	} while ((strcmp(ans, "dir") > 0) && (strcmp(ans, "fil") > 0));
+	cin.clear();
 	if ((strcmp(ans, "fil") == 0))
 	{
 		cout<<"Файл для удаления: ";
@@ -67,9 +71,10 @@ void removefile() //added 02/09/2019 21:37
 			{
 				cout << "Папка для удаления: ";
 				cin >> dirname;
-				if (_rmdir(dirname) == -1)
+				if (_rmdir(dirname) == -1) //10/12/2019 15:38 не убирать эту строчку, иначе не удаляет файл
 				{
 					cout << "Ошибка удаления папки" << endl;
+					cout << "error" << strerror(errno) << endl;
 				}
 				else
 					cout << "Папка удалена" << endl;
@@ -85,6 +90,7 @@ void openfile()
 	GetCurrentDirectory(MAX_PATH, szDirName);
 	cout << setw(5) << "Имя файла: ";
 	cin >> f_name;
+
 	strcat_s(szDirName, f_name);
 	ifstream fin(f_name);
 	while (!fin.is_open())
