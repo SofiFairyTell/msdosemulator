@@ -7,7 +7,7 @@
 #include <time.h> 
 #include <io.h>
 #include <stdio.h>
-#include<direct.h> //удаление файлов и папок
+#include<direct.h> //СѓРґР°Р»РµРЅРёРµ С„Р°Р№Р»РѕРІ Рё РїР°РїРѕРє
 
 using std::cerr;
 using std::cout;
@@ -18,19 +18,17 @@ using std::ofstream;
 using std::ifstream;
 
 
-/*функции меню*/
+/*С„СѓРЅРєС†РёРё РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёСЏ СЃ РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј*/
+void changeornot();
 int mainmenu();
 void menucase();
-void menucomm();
-/*команды для работы с каталогом*/
+void help();
+/*С„СѓРЅРєС†РёРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РєР°С‚Р°Р»РѕРіРѕРј*/
 int getcurrdirect();
 int createdirect();
 void chdir();
-void wadir();// Поиск файлов в каталоге
-void changeornot();
-/*команды для работы с файлами*/
+void wadir();// РџРѕРёСЃРє С„Р°Р№Р»РѕРІ РІ РєР°С‚Р°Р»РѕРіРµ
+void removefile();// РЈРґР°Р»РёС‚СЊ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РёР№ С„Р°Р№Р», РѕР±С‰Р°СЏ С„СѓРЅРєС†РёСЏ
+/* С„СѓРЅРєС†РёРё РїРѕ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ С„Р°Р№Р»Р°РјРё*/
 void filecreate();
 void openfile();
-/*общие команды*/
-void removefile();// Удалить существующий файл
-
