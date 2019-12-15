@@ -1,94 +1,30 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "allfunctions.h"
 
-/*************изменение папки если не хочет в текущей**************************/
-void changeornot()
-{
-	char ans[4];
-	TCHAR sPath[MAX_PATH];
-	do
-	{
-		cout << setw(5)<<"ДЕЙСТВИЯ В ТЕКУЩЕЙ ПАПКЕ.ИЗМЕНИТЬ?(yes/no) ";
-		cin >> ans;
-	} while ((strcmp(ans, "no") > 0) && (strcmp(ans, "yes") > 0));
-	
-	cin.clear();
 
-	if ((strcmp(ans, "no") == 0))
-	{
-		GetCurrentDirectory(MAX_PATH, sPath);
-		SetCurrentDirectory(sPath);
-	}
-	else
-	{
-		if ((strcmp(ans, "yes") == 0))
-		{
-			chdir();
-		}
-	}
-}
-/****************************************************************************/
-/*********************создание файла в определенной папке******************/
+/*********************СЃРѕР·РґР°РЅРёРµ С„Р°Р№Р»Р° РІ РѕРїСЂРµРґРµР»РµРЅРЅРѕР№ РїР°РїРєРµ******************/
 void filecreate()
 {
-	const int MAX = 2000;//максимальная длина строки
-	char str[MAX], f_name[MAX_PATH]; //строка , имя файла
+	const int MAX = 2000;//РјР°РєСЃРёРјР°Р»СЊРЅР°СЏ РґР»РёРЅР° СЃС‚СЂРѕРєРё
+	char str[MAX], f_name[MAX_PATH]; //СЃС‚СЂРѕРєР° , РёРјСЏ С„Р°Р№Р»Р°
 	changeornot();
-	cout << setw(5) <<"Имя файла: ";
+	cout << setw(5) <<"РРјСЏ С„Р°Р№Р»Р°: ";
 	cin >> f_name;
 
-	ofstream fout(f_name); // создаём объект класса ofstream для записи 
-	cin.get(str, MAX, '/');//пока не будет введен конечный символ будет ввод текста продолжен
-	fout << str; // запись строки в файл
-	fout.close(); // закрываем файл
+	ofstream fout(f_name); // СЃРѕР·РґР°С‘Рј РѕР±СЉРµРєС‚ РєР»Р°СЃСЃР° ofstream РґР»СЏ Р·Р°РїРёСЃРё 
+	cin.get(str, MAX, '/');//РїРѕРєР° РЅРµ Р±СѓРґРµС‚ РІРІРµРґРµРЅ РєРѕРЅРµС‡РЅС‹Р№ СЃРёРјРІРѕР» Р±СѓРґРµС‚ РІРІРѕРґ С‚РµРєСЃС‚Р° РїСЂРѕРґРѕР»Р¶РµРЅ
+	fout << str; // Р·Р°РїРёСЃСЊ СЃС‚СЂРѕРєРё РІ С„Р°Р№Р»
+	fout.close(); // Р·Р°РєСЂС‹РІР°РµРј С„Р°Р№Р»
 }
 /************************************************************************/
-/*********************функция удаления файла в определенной папке*******/
-void removefile() //added 02/09/2019 21:37
-{
-	char ans[4], fname[MAX_PATH], dirname[MAX_PATH];
-	changeornot();
-	do
-	{
-		cout << setw(5) <<"Удаляется directory (dir) или file (fil)?";
-		cin >> ans;
-	} while ((strcmp(ans, "dir") > 0) && (strcmp(ans, "fil") > 0));
-	cin.clear();
-	if ((strcmp(ans, "fil") == 0))
-	{
-		cout<<"Файл для удаления: ";
-		cin>>fname;
-		if (remove(fname))
-		{
-			cout<<"Ошибка удаления файла"<<endl;
-		}
-		else
-			cout << "Файл удален" << endl;
-		}
-		else
-		{
-			if ((strcmp(ans, "dir") == 0))
-			{
-				cout << "Папка для удаления: ";
-				cin >> dirname;
-				if (_rmdir(dirname) == -1) //10/12/2019 15:38 не убирать эту строчку, иначе не удаляет файл
-				{
-					cout << "Ошибка удаления папки" << endl;
-					cout << "error" << strerror(errno) << endl;
-				}
-				else
-					cout << "Папка удалена" << endl;
-			}
-		}
-}
-/**********************************************************************/
-/*******************************27/11/2019 0:02 открытие файла**********/
+
+/*******************************27/11/2019 0:02 РѕС‚РєСЂС‹С‚РёРµ С„Р°Р№Р»Р°**********/
 void openfile()
 {
 	char buff[255],f_name[MAX_PATH], szDirName[MAX_PATH];
 	changeornot();
 	GetCurrentDirectory(MAX_PATH, szDirName);
-	cout << setw(5) << "Имя файла: ";
+	cout << setw(5) << "РРјСЏ С„Р°Р№Р»Р°: ";
 	cin >> f_name;
 
 	strcat_s(szDirName, f_name);
@@ -103,7 +39,7 @@ void openfile()
 	{
 	while (!fin.eof())
 		{
-			fin.getline(buff, 80);//sizeof(buff)); //запись i-строки
+			fin.getline(buff, 80);//sizeof(buff)); //Р·Р°РїРёСЃСЊ i-СЃС‚СЂРѕРєРё
 			cout << buff << endl;
 		}
 	}
