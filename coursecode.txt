@@ -1,0 +1,521 @@
+//union of my progect
+//это только код. но так эт разные файлы проекта
+//чтобы не потерять 
+//06/11/2019 0:05
+
+#include <iostream>
+#include "mainfunction.h"
+
+int main()
+{
+	mainmenu();
+}
+
+#pragma once
+#include <iostream>
+#include <iomanip>
+int mainmenu();
+int getcurrdirect();
+int createdirect();
+// Переименовать существующий файл
+void RenameFile();
+// Удалить существующий файл
+void removefile();
+// Поиск файлов в каталоге
+void wadir();
+void main2();
+void filecreate();
+void chdir();
+void removefile();
+void changeornot();
+void exdir();
+void menucomm();
+
+#include <iostream>
+#include <string>
+#include <iomanip>
+#include "mainfunction.h"
+#include <conio.h>
+using std::cin;
+using std::cout;
+using std::endl;
+using std::string;
+using std::setw;
+const int prSize = 10;
+const int n = 6;
+char str[6];
+int ans = NULL;
+/*******Функция которая определяет как была введена**/
+/*********команда и присваивает ей номер по списку**/
+int switchfunc(char *buf)
+{
+	int ans;
+	if (strcmp(buf, "renam")==0)
+	{
+		cout << "....введена команда renam..." << endl;
+		ans = 1;
+	}
+	else
+	{
+		if (strcmp(buf, "delfi")==0)
+		{
+			ans = 2;
+		}
+		else
+		{
+			if (strcmp(buf, "wadir")==0)
+			{
+				ans = 3;
+			}
+			else
+			{
+				if (strcmp(buf, "crdir")==0)
+					{
+						ans = 4;
+					}
+				else
+				{
+					if (strcmp(buf, "crfil")==0)
+					{
+						ans = 5;
+					}
+					else
+					{
+						if (strcmp(buf, "crfil")==0)
+						{
+							ans = 5;
+						}
+						else
+						{
+							if (strcmp(buf, "chdir")==0)
+							{
+								ans = 6;
+							}
+							else
+							{
+								if (strcmp(buf, "exit")==0)
+								{
+									ans = 0;
+								}
+								else
+								{ 
+									if (strcmp(buf, "clear") == 0)
+									{
+										ans = 8;
+									}
+									else
+									{
+									cout << "такой команды пока не существует, но мы ее обязательно добавим " << endl;
+									ans = 7;
+									}
+									
+								}
+									
+							}
+						}
+							
+								
+					}
+				}
+			}
+		}
+	}
+return ans;
+}
+/**************************************************/
+/****просто команды меню в одной функции**********/
+void menucomm()
+{
+	getcurrdirect();
+// предлагаем выбрать пункт меню для выполнения
+	cout << "Please, select preffer number...\n";
+	//меню
+		cout
+			<< "1.rename_file function - renam"<< setw(45) << "4.create_directory function - crdir"<< endl
+			<< "2.delete_file fucntion - delfi" << setw(40)<< "5.create_file function - crfil" << endl
+			<< "3.watch_directory function - wadir" << setw(41)<< "6.change_directory function - chdir" << endl
+			<< "0 - exit\n\n";// Выход;
+}
+/************************************************/
+/****непосредственно само меню******************/
+void main2()
+{
+	menucomm();
+	//выбор пользователя
+	char ch;
+	do {
+		do
+		{
+		cout << setw(6)<<"command: ";
+		cin >> str;
+		} while (strlen(str)>5);
+		
+		ans = switchfunc(str);
+		//cout << ans << endl; //вывод номера команды. 17/10/2019 21:47
+		switch (ans)
+		{
+		case 1:
+			//RenameFile();
+			cout << "функция переименования файлов ожидается...." << endl;
+			break;
+		case 2:
+			removefile();
+			break;
+		case 3:
+			wadir();
+			break;
+		case 4:
+			createdirect();
+			break;
+		case 5:
+			filecreate();
+			break;
+		case 6:
+			chdir();
+			break;
+		case 7:
+			//пустая команда на случай ошибок неправильного ввода
+			break;
+		case 8: 
+			system("cls");
+			menucomm();
+			break;
+		default:
+			cout << "Cпасибо что использовали программу.\n Но разве что-то пошло не так <-.->?" << endl;
+		}
+		/***************************************************/		
+	} while (ans != 0);      // Выход из программы
+}
+/**********************************************/
+int mainmenu()
+{
+	setlocale(LC_ALL, "");
+	main2();
+	return 0;
+	system("pause");	
+}
+
+
+#include <windows.h>
+#include <iostream>
+#include <iomanip>
+#include "mainfunction.h"
+using std::cerr;
+using std::cout;
+using std::cin;
+using std::endl;
+using std::setw;
+/**********адрес текущей директории***************************************/
+int getcurrdirect()
+{
+	DWORD  dwNumberOfChar;
+	char  szDirName[MAX_PATH];
+	// определяем имя текущего каталога
+	dwNumberOfChar = GetCurrentDirectory(MAX_PATH, szDirName);
+	if (dwNumberOfChar == 0)
+	{
+		cerr << "Get current directory failed." << endl
+			<< "The last error code: " << GetLastError() << endl;
+		cout << "Press any key to finish.";
+		cin.get();
+		return 0;
+	}
+	// выводим на консоль имя текущего каталога
+	cout << "Current directory name: " << szDirName;
+	cout << "->";
+	 return 0;
+}
+/**************************************************************************/
+/***********создание директории*******************************************/
+int createdirect()
+{	// определяем имя текущего каталога
+	char  szDirName[MAX_PATH];
+	GetCurrentDirectory(MAX_PATH, szDirName);
+	TCHAR  sPathto1[MAX_PATH];//путь для создания
+	TCHAR sPathTo2[MAX_PATH];//путь который нужно создать
+	TCHAR dirName[150];//имя папки если создаем внутри 
+	char ans[4];
+	do 
+		{
+		cout << setw(5)<<"Введите текущая (cur) для создания папки в текущем каталоге или другое (els)";
+		cin >> ans;
+	} while ((strcmp(ans,"cur") > 0) || (strcmp(ans, "else")>0));
+	if ((strcmp(ans, "cur") == 0))
+	{
+		cout << "Введите название создаваемой папки" << endl;
+		cin >> sPathTo2;
+		strcat_s(szDirName, "\\");
+		strcat_s(szDirName, sPathTo2);
+		strcpy_s(sPathto1, szDirName);
+		CreateDirectory(sPathto1, NULL);
+	}
+	else 
+	{
+		if ((strcmp(ans,"els") == 0))
+		{
+		cout << "Введите полный путь для создаваемой папки" << endl;
+		cin >> sPathTo2;
+		strcpy_s(sPathto1, sPathTo2);
+		CreateDirectory(sPathto1, NULL);
+		}
+	}	return 0;
+}
+/************************************************************************/
+/***************функция смены диска*************************************/
+void chdir()
+{
+	TCHAR sPath[MAX_PATH];
+	TCHAR sPathTo2[MAX_PATH];
+	cout << setw(5)<<"введите путь: ";
+	cin >> sPathTo2;
+	if (strcmp(sPathTo2, "test") == 0)
+	{
+		strcpy_s(sPathTo2, "C:\\testdirect\\");
+	}
+	strcpy_s(sPath, sPathTo2);//прим. от 25/09/2019 регистр имеет значение для диска 
+	SetCurrentDirectory(sPath);
+	//--------29/08/2019/ делаю этот кусок для проверки---------
+	char  szDirName[MAX_PATH];
+	GetCurrentDirectory(MAX_PATH, szDirName);
+	cout << "Current directory name: " << szDirName << endl;
+	//--------правильной  установки директории------------------
+}
+/**********************************************************************/
+
+
+#include "mainfunction.h"
+#include <stdio.h>// Здесь находятся функции переименования и удаления
+#include <stdlib.h>
+#include <io.h>  // Здесь находятся функции для поиска файлов         
+#include <string.h>
+#include <iostream>
+#include <fstream>
+#include <time.h>
+#include <cstdio>
+#include<direct.h>
+#include <windows.h>// для функции AnsiToOem
+using namespace std;
+#define _CRT_SECURE_NO_WARNINGS
+/*************изменение папки если не хочет в текущей**************************/
+void changeornot()
+{
+	char ans[4];
+	TCHAR sPath[MAX_PATH];
+	TCHAR sPathTo2[MAX_PATH];
+	do
+	{
+		cout << setw(5)<<"ДЕЙСТВИЯ В ТЕКУЩЕЙ ПАПКЕ.ИЗМЕНИТЬ?(yes/no) ";
+		cin >> ans;
+	} while ((strcmp(ans, "no") > 0) && (strcmp(ans, "yes") > 0));
+	if ((strcmp(ans, "no") == 0))
+	{
+		GetCurrentDirectory(MAX_PATH, sPath);
+		SetCurrentDirectory(sPath);
+	}
+	else
+	{
+		if ((strcmp(ans, "yes") == 0))
+		{
+			chdir();
+		}
+	}
+}
+/****************************************************************************/
+/*********************создание файла в определенной папке******************/
+void filecreate()
+{
+	const int MAX = 2000;//максимальная длина строки
+	char str[MAX]; //строка
+	char f_name[MAX_PATH];
+	changeornot();
+	cout << setw(5) <<"Имя файла: ";
+	cin >> f_name;
+	ofstream fout(f_name); // создаём объект класса ofstream для записи 
+	cin.get(str, MAX, '/');//пока не будет введен конечный символ будет ввод текста продолжен
+	fout << str; // запись строки в файл
+	fout.close(); // закрываем файл
+	system("pause");
+}
+/************************************************************************/
+/*********************функция удаления файла в определенной папке*******/
+void removefile() //added 02/09/2019 21:37
+{
+	char ans[4];
+	changeornot();
+	char fname[MAX_PATH];
+	char dirname[MAX_PATH];
+	do
+	{
+		cout << setw(5) <<"Удаляется directory (dir) или file (fil)?";
+		cin >> ans;
+	} while ((strcmp(ans, "dir") > 0) && (strcmp(ans, "fil") > 0));
+	if ((strcmp(ans, "fil") == 0))
+	{
+	cout<<"Файл для удаления: ";
+	cin>>fname;
+	if (remove(fname))
+	{
+		cout<<"Ошибка удаления файла"<<endl;
+	}
+	else
+		cout << "Файл удален" << endl;
+	}
+	else
+	{
+		if ((strcmp(ans, "dir") == 0))
+		{
+			cout << "Папка для удаления: ";
+			cin >> dirname;
+			if (_rmdir(dirname) == -1)
+			{
+				cout << "Ошибка удаления папки" << endl;
+			}
+			else
+				cout << "Папка удалена" << endl;
+		}
+
+	}
+	
+}
+/**********************************************************************/
+/***************Поиск файлов в каталоге*******************************/
+void exwadir()
+{
+	TCHAR sPath[MAX_PATH];
+	TCHAR sPathTo2[MAX_PATH];
+	char  szDirName[MAX_PATH];
+	GetCurrentDirectory(MAX_PATH, szDirName);
+	int k = strlen(szDirName);
+	int l;
+	char path[MAX_PATH];//сюда записать путь к папке
+	cout << "\nEnter full path (for example, C:\\):"; //тестируется по следующей папке C:\\testdirect 29/08/2019 22:19
+	cin >> path;
+	if (strcmp(path,"current")==0)
+	{
+		cout << "path current " << szDirName << endl;
+		strcat_s(szDirName,"\\");
+		strcpy_s(path, szDirName);
+	}
+	else 
+	{
+		strcat_s(path, "\\");
+	}
+	cout << path;
+	// Запросим маску файлов 
+	char mask[15];
+	cout << "\nEnter mask (for example, *.* or *.txt):";
+	cin >> mask;
+	strcat_s(path, mask);//C:\testdirect\*.txt or C:\testdirect\*.* что и где ищем
+	_finddata_t *fileinfo = new _finddata_t;
+	// Начинаем поиск
+	long done = _findfirst(path, fileinfo);//возвращает дескриптор индентифицирующий файл или группу файлов
+	// если done будет равняться -1, 
+	// то поиск вести бесмысленно
+	int MayWeWork = done;
+	// Счетчик, содержит информацию о количестве найденых файлов.	
+	int count = 0;
+	while (MayWeWork != -1)
+	{
+		count++;
+		char buffer[30], buffer1[30], buffer2[30];
+		ctime_s(buffer, _countof(buffer), &(fileinfo->time_create));//22:55 02/09/2019 и ниже то же
+		ctime_s(buffer1, _countof(buffer1), &(fileinfo->time_access));
+		ctime_s(buffer2, _countof(buffer2), &(fileinfo->time_write));
+		AnsiToOem(fileinfo->name, fileinfo->name);//перекодирование имени файла на случай использования кириллицы
+		// Печать имени найденного файла
+		cout 
+			<< fileinfo->name <<"  "
+			<<fileinfo->attrib << "  "
+			<<fileinfo->size << "  "
+			<<"create: "<<buffer << "  "
+			<<"write: "<<buffer2<< "  "
+			<<"\n\n";
+		// Пытаемся найти следующий файл из группы
+		MayWeWork = _findnext(done, fileinfo);
+	}
+	// Вывод сообщения о количестве найденных файлов.
+	cout << "\nInformation: was found " << count;
+	cout << " file(s) in folder..." << path << "\n\n";
+	// Очистка памяти
+	_findclose(done);
+	delete fileinfo;
+}
+/********************************************************************/
+/***********функция поиска папок в папке ***************************/
+void wadir ()
+{	
+	TCHAR sPath[MAX_PATH];
+	TCHAR sPathTo2[MAX_PATH];
+	char  szDirName[MAX_PATH];
+	GetCurrentDirectory(MAX_PATH, szDirName);
+	int k = strlen(szDirName);
+	int l;
+	char path[MAX_PATH];//сюда записать путь к папке
+	cout << "\nEnter full path (for example, C:\\):"; //тестируется по следующей папке C:\\testdirect 29/08/2019 22:19
+	cin >> path;
+	if (strcmp(path, "current") == 0)
+	{
+		cout << "path current " << szDirName << endl;
+		strcat_s(szDirName, "\\");
+		strcpy_s(path, szDirName);
+	}
+	else
+	{
+		strcat_s(path, "\\");
+	}
+	cout << path;
+	// Запросим маску файлов 
+	char mask[15];
+	cout << "\nEnter mask (for example, *.* or *.txt):";
+	cin >> mask;
+	strcat_s(path, mask);//C:\testdirect\*.txt or C:\testdirect\*.* что и где ищем
+	//попробуем поискать папки в по пути
+		_finddata_t *lpFindData = new _finddata_t;
+	long hSearch = _findfirst(path, lpFindData);
+	//long hSearch = _findfirst("C:\\testdirect\\*", lpFindData);
+	int dir = 0, file=0;
+	if (hSearch != -1)
+	{
+		do // Пока не закончатся все файлы в директории
+		{
+			if (strcmp(".", lpFindData->name) && strcmp("..", lpFindData->name)) // Игнорируем текущую директорию и родительскую
+			{
+				if (lpFindData->attrib== FILE_ATTRIBUTE_DIRECTORY) // если найденный файл директория
+				{
+					cout << lpFindData->name <<"\n\n";
+					//printf("Directory found: %s\n", lpFindData->name); // выводим название найденной директории
+					dir++;
+				}
+				else
+				{
+					file++;
+					char buffer[30], buffer1[30], buffer2[30];
+					ctime_s(buffer, _countof(buffer), &(lpFindData->time_create));//22:55 02/09/2019 и ниже то же
+					ctime_s(buffer1, _countof(buffer1), &(lpFindData->time_access));
+					ctime_s(buffer2, _countof(buffer2), &(lpFindData->time_write));
+					AnsiToOem(lpFindData->name, lpFindData->name);//перекодирование имени файла на случай использования кириллицы
+					// Печать имени найденного файла
+					cout
+						<< lpFindData->name << "  "
+						<< lpFindData->attrib << "  "
+						<< lpFindData->size << "  "
+						<< "create: " << buffer << "  "
+						<< "write: " << buffer2 << "  "
+						<< "\n\n";
+					// Пытаемся найти следующий файл из группы
+					//MayWeWork = _findnext(done, fileinfo);
+				}
+			}
+			_findnext(hSearch, lpFindData); // продолжаем поиск в директории
+
+		} while (GetLastError() != ERROR_NO_MORE_FILES); // указывает, что в данном месте больше нету файлов
+	}
+	cout << "Было найдено папок: " << dir <<"\n"<< "Было найдено файлов: " <<file<< "\n";
+	cout << " file(s) in folder..." << path << "\n\n";
+	// Очистка памяти
+	_findclose(hSearch);
+	delete lpFindData;
+}
+/******************************************************************/
+
+
